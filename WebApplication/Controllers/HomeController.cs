@@ -13,6 +13,7 @@ namespace WebApplication.Controllers
             _context = new ApplicationDbContext();
         }
 
+        [AllowAnonymous]
         public ActionResult DashboardV1()
         {
             ViewBag.Count = _context.Archives.Count();

@@ -9,7 +9,7 @@ using WebApplication.Models;
 
 namespace WebApplication.Controllers.Api
 {
-    [Authorize]
+   
     public class ArchivesController : ApiController
     {
         private ApplicationDbContext _context;
@@ -20,7 +20,6 @@ namespace WebApplication.Controllers.Api
         }
 
         // GET /api/archives
-        [AllowAnonymous]
         public IHttpActionResult GetArchives(string query = null)
         {
             var archivesQuery = _context.Archives;

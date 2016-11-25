@@ -9,7 +9,8 @@ using WebApplication.Models;
 
 namespace WebApplication.Controllers
 {
-    [Authorize]
+
+    [Authorize(Roles = "CanManageArchives")]
     public class ArchivesController : Controller
     {
         private ApplicationDbContext _context;
@@ -20,7 +21,6 @@ namespace WebApplication.Controllers
         }
 
         // GET: Archives
-        [AllowAnonymous]
         public ActionResult Index()
         {
             return View();
