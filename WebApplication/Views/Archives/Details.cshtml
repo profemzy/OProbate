@@ -1,0 +1,43 @@
+﻿@model WebApplication.Models.Archive
+
+@{
+    ViewBag.Title = @Model.Name+ " Case Details";
+}
+
+
+
+<div>
+   
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.Name)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Name)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.CaseDate)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.CaseDate)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.FilePath)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.FilePath)
+        </dd>
+
+    </dl>
+</div>
+<p>
+    @Html.ActionLink("Edit", "Edit", new { id = Model.Id }) |
+    @Html.ActionLink("Open File", "OpenFile", new { id = Model.Id }) |
+    @Html.ActionLink("Back to List", "Index")
+</p>
