@@ -1,4 +1,5 @@
 ﻿@using WebApplication.Extensions
+@using WebApplication.Models
 <!DOCTYPE html>
 <html>
 <head>
@@ -59,20 +60,25 @@
                             <span>Home</span>
                         </a>
                     </li>
-         
+                    
+@if (Request.IsAuthenticated && User.IsInRole(RoleName.CanManageArchives))
+{
                     <li id="left-sidebar-menu-documentation">
                         <a href="@Url.Action("Create", "Archives")">
                             <i class="fa fa-book"></i>
                             <span>Add Archive</span>
                         </a>
                     </li>
-                    
+
                     <li>
                         <a href="@Url.Action("Index", "Archives")">
                             <i class="fa fa-server"></i>
                             <span>List Archives</span>
                         </a>
                     </li>
+}
+
+                  
                   
                 </ul>
             </section>

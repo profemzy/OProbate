@@ -10,7 +10,7 @@ using WebApplication.Models;
 namespace WebApplication.Controllers
 {
 
-    [Authorize(Roles = "CanManageArchives")]
+    [Authorize(Roles = RoleName.CanManageArchives)]
     public class ArchivesController : Controller
     {
         private ApplicationDbContext _context;
@@ -23,7 +23,7 @@ namespace WebApplication.Controllers
         // GET: Archives
         public ActionResult Index()
         {
-            return View();
+            return User.IsInRole("CanManageArchives") ? View() : View("ReadOnlyList");
         }
 
         // GET: Archives/Details/5

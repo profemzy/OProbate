@@ -9,7 +9,7 @@ using WebApplication.Models;
 
 namespace WebApplication.Controllers.Api
 {
-   
+    [Authorize(Roles = RoleName.CanManageArchives )]
     public class ArchivesController : ApiController
     {
         private ApplicationDbContext _context;

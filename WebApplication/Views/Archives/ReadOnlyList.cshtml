@@ -1,0 +1,48 @@
+﻿@model IEnumerable<WebApplication.Models.Archive>
+
+@{
+    ViewBag.Title = "Probate Archive";
+}
+
+@section scripts {
+    <script src="~/Scripts/app/del.js"></script>
+    <script>
+        $(document).ready(function () {
+            var table = $("#archives")
+                .DataTable({
+                    ajax: {
+                        url: "/api/archives",
+                        dataSrc: ""
+                    },
+                    columns: [
+                        {
+                            data: "name"
+                        },
+                        {
+                            data: "caseDate"
+                        }
+                    ]
+                });
+           
+        });
+
+
+
+    </script>
+}
+
+<div>
+ 
+        <table id="archives" class="table table-bordered table-hover">
+            <thead>
+                <tr>
+                    <th>Name</th>
+                    <th>Date</th>
+                </tr>
+            </thead>
+            <tbody>
+            </tbody>
+        </table>
+    
+
+</div>
