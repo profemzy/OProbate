@@ -17,7 +17,7 @@
 
     <div class="form-group">
         @Html.LabelFor(m => m.CategoryId)
-        @Html.DropDownListFor(m => m.CategoryId, new SelectList(Model.Categories, "Id", "Name"), "", new { @class = "form-control" })
+        @Html.DropDownListFor(m => m.CategoryId, new SelectList(Model.Categories, "Id", "Name"), "Select Category", new { @class = "form-control" })
         @Html.ValidationMessageFor(m => m.CategoryId)
     </div>
 
@@ -33,9 +33,3 @@
     <button type="submit" class="btn btn-primary">Save</button>
 
 }
-
-@section scripts
-{
-    @Scripts.Render("~/bundles/jqueryval")
-}
-

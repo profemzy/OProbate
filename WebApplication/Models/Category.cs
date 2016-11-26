@@ -10,7 +10,7 @@ namespace WebApplication.Models
     {
         public byte Id { get; set; }
 
-        [Required]
+        [Required, Display(Name = "File Category")]
         [StringLength(255)]
         public string Name { get; set; }
     }

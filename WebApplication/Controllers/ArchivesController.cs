@@ -96,7 +96,7 @@ namespace WebApplication.Controllers
 
                 archive.FilePath = pathString;
 
-                Category category = _context.Categories.Single(c => c.Id == archive.CategoryId);
+                var category = _context.Categories.Single(c => c.Id == archive.CategoryId);
                 archive.Category = category;
                 _context.Archives.Add(archive);
                 Directory.CreateDirectory(pathString);
