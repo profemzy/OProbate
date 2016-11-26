@@ -10,6 +10,9 @@ namespace WebApplication.Models
     public class ApplicationDbContext : IdentityDbContext<ApplicationUser>
     {
         public DbSet<Archive> Archives { get; set; }
+        public DbSet<Department> Departments { get; set; }
+        public DbSet<Staff> Staffs { get; set; }
+        public DbSet<Category> Categories { get; set; }
 
         public ApplicationDbContext()
             : base("DefaultConnection", throwIfV1Schema: false)

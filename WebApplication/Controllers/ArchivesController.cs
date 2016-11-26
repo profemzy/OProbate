@@ -6,11 +6,11 @@ using System.Linq;
 using System.Net;
 using System.Web.Mvc;
 using WebApplication.Models;
+using WebApplication.ViewModels;
 
 namespace WebApplication.Controllers
 {
-
-    [Authorize(Roles = RoleName.CanManageArchives)]
+   
     public class ArchivesController : Controller
     {
         private ApplicationDbContext _context;
@@ -20,41 +20,72 @@ namespace WebApplication.Controllers
             _context = new ApplicationDbContext();
         }
 
+        protected override void Dispose(bool disposing)
+        {
+            _context.Dispose();
+        }
+
         // GET: Archives
         public ActionResult Index()
         {
-            return User.IsInRole("CanManageArchives") ? View() : View("ReadOnlyList");
+            return User.IsInRole("CanManageArchives") ? View("List") : View("ReadOnlyList");
         }
 
-        // GET: Archives/Details/5
-        public ActionResult Details(int? id)
+        [Authorize(Roles = RoleName.CanManageArchives)]
+        public ViewResult New()
         {
-            if (id == null)
+            var categories = _context.Categories.ToList();
+            var viewModel = new ArchiveFormViewModel
             {
-                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
-            }
-            var archive = _context.Archives.Find(id);
+                Categories = categories
+            };
+
+            return View("ArchiveForm", viewModel);
+        }
+
+        [Authorize(Roles = RoleName.CanManageArchives)]
+        public ActionResult Edit(int id)
+        {
+            var archive = _context.Archives.SingleOrDefault(a => a.Id == id);
             if (archive == null)
-            {
                 return HttpNotFound();
-            }
+
+            var viewModel = new ArchiveFormViewModel(archive)
+            {
+                Categories = _context.Categories.ToList()
+            };
+
+            return View("ArchiveForm", viewModel);
+        }
+
+
+
+        public ActionResult Details(int id)
+        {
+            var archive = _context.Archives.Include(a => a.Category).SingleOrDefault(a => a.Id == id);
+
+            if (archive == null)
+                return HttpNotFound();
+
             return View(archive);
         }
 
-        // GET: Archives/Create
-        public ActionResult Create()
-        {
-            return View();
-        }
-
-        // POST: Archives/Create
-        // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
-        // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = "Id,Name,CaseDate,FilePath")] Archive archive)
+        [Authorize(Roles = RoleName.CanManageArchives)]
+        public ActionResult Save(Archive archive)
         {
-            if (ModelState.IsValid)
+            if (!ModelState.IsValid)
+            {
+                var viewModel = new ArchiveFormViewModel(archive)
+                {
+                    Categories = _context.Categories.ToList()
+                };
+                return View("ArchiveForm", viewModel);
+            }
+
+            // Create New Archive
+            if (archive.Id == 0)
             {
                 // Specify a name for your top-level folder.
                 const string folderName = @"c:\OndoProbate";
@@ -65,72 +96,26 @@ namespace WebApplication.Controllers
 
                 archive.FilePath = pathString;
 
+                Category category = _context.Categories.Single(c => c.Id == archive.CategoryId);
+                archive.Category = category;
                 _context.Archives.Add(archive);
                 Directory.CreateDirectory(pathString);
-
-                _context.SaveChanges();
-                return RedirectToAction("Index");
             }
-
-            return View(archive);
-        }
-
-        // GET: Archives/Edit/5
-        public ActionResult Edit(int? id)
-        {
-            if (id == null)
+            // Edit Existing Archive
+            else
             {
-                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+                var archiveInDb = _context.Archives.Single(a => a.Id == archive.Id);
+                archiveInDb.Name = archive.Name;
+                archiveInDb.FilePath = archive.FilePath;
+                archiveInDb.CaseDate = archive.CaseDate;
+                archiveInDb.CategoryId = archive.CategoryId;
             }
-            var archive = _context.Archives.Find(id);
-            if (archive == null)
-            {
-                return HttpNotFound();
-            }
-            return View(archive);
-        }
 
-        // POST: Archives/Edit/5
-        // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
-        // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public ActionResult Edit([Bind(Include = "Id,Name,CaseDate,FilePath")] Archive archive)
-        {
-            if (ModelState.IsValid)
-            {
-                _context.Entry(archive).State = EntityState.Modified;
-                _context.SaveChanges();
-                return RedirectToAction("Index");
-            }
-            return View(archive);
-        }
-
-        // GET: Archives/Delete/5
-        public ActionResult Delete(int? id)
-        {
-            if (id == null)
-            {
-                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
-            }
-            var archive = _context.Archives.Find(id);
-            if (archive == null)
-            {
-                return HttpNotFound();
-            }
-            return View(archive);
-        }
-
-        // POST: Archives/Delete/5
-        [HttpPost, ActionName("Delete")]
-        [ValidateAntiForgeryToken]
-        public ActionResult DeleteConfirmed(int id)
-        {
-            var archive = _context.Archives.Find(id);
-            _context.Archives.Remove(archive);
             _context.SaveChanges();
-            return RedirectToAction("Index");
+            return RedirectToAction("Index", "Archives");
         }
+
+
 
         public ActionResult OpenFile(int id)
         {
@@ -144,13 +129,5 @@ namespace WebApplication.Controllers
 
         }
 
-        protected override void Dispose(bool disposing)
-        {
-            if (disposing)
-            {
-                _context.Dispose();
-            }
-            base.Dispose(disposing);
-        }
     }
 }

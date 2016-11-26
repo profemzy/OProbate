@@ -222,6 +222,9 @@
     <Compile Include="Controllers\TablesController.cs" />
     <Compile Include="Controllers\WidgetsController.cs" />
     <Compile Include="Dtos\ArchiveDto.cs" />
+    <Compile Include="Dtos\CategoryDto.cs" />
+    <Compile Include="Dtos\DepartmentDto.cs" />
+    <Compile Include="Dtos\StaffDto.cs" />
     <Compile Include="Extensions\ClaimsExtensions.cs" />
     <Compile Include="GlimpseSecurityPolicy.cs" />
     <Compile Include="Global.asax.cs">
@@ -239,17 +242,34 @@
     <Compile Include="Migrations\201611251415245_SeedUsers.Designer.cs">
       <DependentUpon>201611251415245_SeedUsers.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201611260924301_CreatedDepartmentStaffAndCategoryModel.cs" />
+    <Compile Include="Migrations\201611260924301_CreatedDepartmentStaffAndCategoryModel.Designer.cs">
+      <DependentUpon>201611260924301_CreatedDepartmentStaffAndCategoryModel.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201611261105340_ModifiedDtos.cs" />
+    <Compile Include="Migrations\201611261105340_ModifiedDtos.Designer.cs">
+      <DependentUpon>201611261105340_ModifiedDtos.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201611261137114_SeedArchiveCategories.cs" />
+    <Compile Include="Migrations\201611261137114_SeedArchiveCategories.Designer.cs">
+      <DependentUpon>201611261137114_SeedArchiveCategories.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
     <Compile Include="Models\ApplicationDbContext.cs" />
     <Compile Include="Models\Archive.cs" />
+    <Compile Include="Models\Category.cs" />
+    <Compile Include="Models\Department.cs" />
     <Compile Include="Models\IdentityModels.cs" />
     <Compile Include="Models\LoginViewModel.cs" />
     <Compile Include="Models\ManageViewModels.cs" />
     <Compile Include="Models\RegisterViewModel.cs" />
     <Compile Include="Models\RoleName.cs" />
+    <Compile Include="Models\Staff.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Startup.cs" />
+    <Compile Include="ViewModels\ArchiveFormViewModel.cs" />
+    <Compile Include="ViewModels\StaffFormViewModel.cs" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="AdminLTE\bootstrap\css\bootstrap.css" />
@@ -549,7 +569,6 @@
     <Content Include="Global.asax" />
     <Content Include="Scripts\Account\Login.js" />
     <Content Include="Scripts\Account\Register.js" />
-    <Content Include="Scripts\app\del.js" />
     <Content Include="Scripts\bootbox.js" />
     <Content Include="Scripts\bootbox.min.js" />
     <Content Include="Scripts\Calendar\Calendar-menu.js" />
@@ -733,12 +752,10 @@
     <Content Include="Views\Widgets\Index.cshtml" />
     <Content Include="Views\Home\DashboardV1.cshtml" />
     <Content Include="Views\Home\DashboardV2.cshtml" />
-    <Content Include="Views\Archives\Create.cshtml" />
-    <Content Include="Views\Archives\Delete.cshtml" />
     <Content Include="Views\Archives\Details.cshtml" />
-    <Content Include="Views\Archives\Edit.cshtml" />
-    <Content Include="Views\Archives\Index.cshtml" />
+    <Content Include="Views\Archives\List.cshtml" />
     <Content Include="Views\Archives\ReadOnlyList.cshtml" />
+    <Content Include="Views\Archives\ArchiveForm.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
@@ -778,6 +795,15 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201611251415245_SeedUsers.resx">
       <DependentUpon>201611251415245_SeedUsers.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201611260924301_CreatedDepartmentStaffAndCategoryModel.resx">
+      <DependentUpon>201611260924301_CreatedDepartmentStaffAndCategoryModel.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201611261105340_ModifiedDtos.resx">
+      <DependentUpon>201611261105340_ModifiedDtos.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201611261137114_SeedArchiveCategories.resx">
+      <DependentUpon>201611261137114_SeedArchiveCategories.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>

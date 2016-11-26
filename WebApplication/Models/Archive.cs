@@ -18,5 +18,11 @@ namespace WebApplication.Models
 
         [Display(Name = "File Path")]
         public string FilePath { get; set; }
+
+        public Category Category { get; set; }
+
+        [Display(Name = "Category")]
+        [Required]
+        public int CategoryId { get; set; }
     }
 }

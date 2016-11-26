@@ -12,8 +12,16 @@ namespace WebApplication.App_Start
     {
         public MappingProfile()
         {
+            // Domain to Dto
             Mapper.CreateMap<Archive, ArchiveDto>();
-            Mapper.CreateMap<ArchiveDto, Archive>();
+            Mapper.CreateMap<Staff, StaffDto>();
+            Mapper.CreateMap<Category, CategoryDto>();
+            Mapper.CreateMap<Department, DepartmentDto>();
+
+
+            // Dto to Domain
+            Mapper.CreateMap<ArchiveDto, Archive>().ForMember(a => a.Id, opt => opt.Ignore());
+            Mapper.CreateMap<ArchiveDto, Archive>().ForMember(a => a.Id, opt => opt.Ignore());
         }
     }
 }

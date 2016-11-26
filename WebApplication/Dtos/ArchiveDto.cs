@@ -15,7 +15,10 @@ namespace WebApplication.Dtos
 
         public string FilePath { get; set; }
 
+        [Required]
+        public byte CategoryId { get; set; }
 
+        public CategoryDto Category { get; set; }
 
     }
 }

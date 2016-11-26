@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Data.Entity;
 using System.IO;
 using System.Linq;
@@ -9,7 +10,6 @@ using WebApplication.Models;
 
 namespace WebApplication.Controllers.Api
 {
-    [Authorize(Roles = RoleName.CanManageArchives )]
     public class ArchivesController : ApiController
     {
         private ApplicationDbContext _context;
@@ -19,20 +19,14 @@ namespace WebApplication.Controllers.Api
             _context = new ApplicationDbContext();
         }
 
-        // GET /api/archives
-        public IHttpActionResult GetArchives(string query = null)
+        // GET /api/archives/1
+
+        public IEnumerable<ArchiveDto> GetArchives()
         {
-            var archivesQuery = _context.Archives;
-
-
-            if (!String.IsNullOrWhiteSpace(query))
-                archivesQuery = archivesQuery.Where(a => a.Name.Contains(query)) as DbSet<Archive>;  
-
-            var archiveDtos = archivesQuery
+            return _context.Archives
+                .Include(a => a.Category)
                 .ToList()
                 .Select(Mapper.Map<Archive, ArchiveDto>);
-
-            return Ok(archiveDtos);
         }
 
 
@@ -48,6 +42,7 @@ namespace WebApplication.Controllers.Api
 
         // POST /api/archives
         [HttpPost]
+        [Authorize(Roles = RoleName.CanManageArchives)]
         public IHttpActionResult CreateArchive(ArchiveDto archiveDto)
         {
             if (!ModelState.IsValid)
@@ -69,6 +64,7 @@ namespace WebApplication.Controllers.Api
 
         // PUT /api/archives/1
         [HttpPut]
+        [Authorize(Roles = RoleName.CanManageArchives)]
         public IHttpActionResult UpdateCustomer(int id, ArchiveDto archiveDto)
         {
             if (!ModelState.IsValid)
@@ -89,6 +85,7 @@ namespace WebApplication.Controllers.Api
 
         // DELETE /api/archives/1
         [HttpDelete]
+        [Authorize(Roles = RoleName.CanManageArchives)]
         public IHttpActionResult DeleteArchive(int id)
         {
             var archiveInDb = _context.Archives.SingleOrDefault(a => a.Id == id);
