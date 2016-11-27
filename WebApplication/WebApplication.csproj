@@ -209,8 +209,10 @@
     <Compile Include="App_Start\WebApiConfig.cs" />
     <Compile Include="Controllers\AccountController.cs" />
     <Compile Include="Controllers\Api\ArchivesController.cs" />
+    <Compile Include="Controllers\Api\StaffsController.cs" />
     <Compile Include="Controllers\ArchivesController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
+    <Compile Include="Controllers\StaffsController.cs" />
     <Compile Include="Dtos\ArchiveDto.cs" />
     <Compile Include="Dtos\CategoryDto.cs" />
     <Compile Include="Dtos\DepartmentDto.cs" />
@@ -243,6 +245,10 @@
     <Compile Include="Migrations\201611261137114_SeedArchiveCategories.cs" />
     <Compile Include="Migrations\201611261137114_SeedArchiveCategories.Designer.cs">
       <DependentUpon>201611261137114_SeedArchiveCategories.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201611271008049_SeedStaffDepartments.cs" />
+    <Compile Include="Migrations\201611271008049_SeedStaffDepartments.Designer.cs">
+      <DependentUpon>201611271008049_SeedStaffDepartments.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
@@ -676,6 +682,9 @@
     <Content Include="Views\Archives\List.cshtml" />
     <Content Include="Views\Archives\ReadOnlyList.cshtml" />
     <Content Include="Views\Archives\ArchiveForm.cshtml" />
+    <Content Include="Views\Staffs\StaffForm.cshtml" />
+    <Content Include="Views\Staffs\Index.cshtml" />
+    <Content Include="Views\Staffs\Details.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
@@ -727,6 +736,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201611261137114_SeedArchiveCategories.resx">
       <DependentUpon>201611261137114_SeedArchiveCategories.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201611271008049_SeedStaffDepartments.resx">
+      <DependentUpon>201611271008049_SeedStaffDepartments.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>

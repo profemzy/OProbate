@@ -19,7 +19,7 @@ namespace WebApplication.Controllers.Api
             _context = new ApplicationDbContext();
         }
 
-        // GET /api/archives/1
+        // GET /api/archives
 
         public IEnumerable<ArchiveDto> GetArchives()
         {

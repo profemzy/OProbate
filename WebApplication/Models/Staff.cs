@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations;
-using System.Linq;
-using System.Web;
+﻿using System.ComponentModel.DataAnnotations;
 
 namespace WebApplication.Models
 {
@@ -12,8 +8,10 @@ namespace WebApplication.Models
 
         [Required]
         [StringLength(255)]
+        [Display(Name = "First Name")]
         public string Firstname { get; set; }
 
+        [Display(Name = "Last Name")]
         public string  Lastname { get; set; }
 
         public Department Department { get; set; }

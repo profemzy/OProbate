@@ -76,6 +76,20 @@
             <span>List Archives</span>
         </a>
     </li>
+
+    <li id="left-sidebar-menu-documentation">
+        <a href="@Url.Action("New", "Staffs")">
+            <i class="fa fa-user"></i>
+            <span>Add Staff</span>
+        </a>
+    </li>
+
+    <li>
+        <a href="@Url.Action("Index", "Staffs")">
+            <i class="fa fa-group"></i>
+            <span>Staff List</span>
+        </a>
+    </li>
 }
 else if (Request.IsAuthenticated)
 {
