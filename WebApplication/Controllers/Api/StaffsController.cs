@@ -22,10 +22,15 @@ namespace WebApplication.Controllers.Api
 
         // GET /api/staffs
 
-        public IHttpActionResult GetStaffs()
+        public IHttpActionResult GetStaffs(string query = null)
         {
-            var staffDtos = _context.Staffs
-               .Include(c => c.Department)
+            var staffsQuery = _context.Staffs
+               .Include(c => c.Department);
+
+            if (!String.IsNullOrWhiteSpace(query))
+                staffsQuery = staffsQuery.Where(s => s.Lastname.Contains(query));
+
+            var staffDtos = staffsQuery
                 .ToList()
                 .Select(Mapper.Map<Staff, StaffDto>);
 

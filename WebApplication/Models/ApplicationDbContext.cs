@@ -13,6 +13,7 @@ namespace WebApplication.Models
         public DbSet<Department> Departments { get; set; }
         public DbSet<Staff> Staffs { get; set; }
         public DbSet<Category> Categories { get; set; }
+        public DbSet<ArchiveRequest> ArchiveRequests { get; set; }
 
         public ApplicationDbContext()
             : base("DefaultConnection", throwIfV1Schema: false)

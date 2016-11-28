@@ -1,0 +1,130 @@
+﻿@model dynamic
+
+@{
+    ViewBag.Title = "New Archive Request Form";
+}
+
+<form id="newArchiveRequest">
+
+    <div class="form-group">
+        <label>Staff</label>
+        <div class="tt-container">
+            <input id="staff" name="staff" required type="text" value="" class="form-control"/>
+        </div>
+    </div>
+    
+
+    <div class="form-group">
+        <label>Archive</label>
+        <div class="tt-container">
+            <input id="archive" name="archive" data-rule-atLeastOneArchive="true" type="text" value="" class="form-control"/>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-md-4 col-sm-4">
+            <ul id="archives" class="list-group"></ul>
+        </div>
+    </div>
+
+    <button class="btn btn-primary">Submit</button>
+
+</form>
+
+
+@section scripts{
+    @Scripts.Render("~/bundles/jqueryval")
+    <script>
+        $(document).ready(function() {
+
+            var vm = {
+                archiveIds: []
+            };
+
+            // Type Ahead for Archive TextBox
+            var staffs = new Bloodhound({
+                datumTokenizer: Bloodhound.tokenizers.obj.whitespace('lastname'),
+                queryTokenizer: Bloodhound.tokenizers.whitespace,
+                remote: {
+                    url: '/api/staffs?query=%QUERY',
+                    wildcard: '%QUERY'
+                }
+            });
+
+            $('#staff').typeahead({
+                minLength: 3,
+                highlight: true
+            }, {
+                name: 'staffs',
+                display: 'lastname',
+                source: staffs
+            }).on("typeahead:select", function(e, staff) {
+                vm.staffId = staff.id;
+            });
+
+            // Type Ahead for Archive TextBox
+            var archives = new Bloodhound({
+                datumTokenizer: Bloodhound.tokenizers.obj.whitespace('name'),
+                queryTokenizer: Bloodhound.tokenizers.whitespace,
+                remote: {
+                    url: '/api/archives?query=%QUERY',
+                    wildcard: '%QUERY'
+                }
+            });
+           
+            $('#archive').typeahead({
+                minLength: 3,
+                highlight: true
+            }, {
+                name: 'archives',
+                display: 'name',
+                source: archives
+            }).on("typeahead:select", function (e, archive) {
+                // append chosen archive dynamically to the ul
+                $("#archives").append("<li class='list-group-item'>" + archive.name + "</li>");
+
+                // clear the archive textbox
+                $("#archive").typeahead("val", "");
+
+                vm.archiveIds.push(archive.id);
+            });
+
+            $.validator.addMethod("validStaff", function() {
+                return vm.staffId && vm.staffId !== 0;
+            }, "Please Select a valid Staff. ");
+
+            $.validator.addMethod("atLeastOneArchive", function () {
+                return vm.archiveIds.length > 0;
+            }, "Please select at least one archive.");
+
+         var validator = $("#newArchiveRequest").validate({
+                submitHandler: function() {
+                    $.ajax({
+                        url: "/api/newArchiveRequest",
+                        method: "post",
+                        data: vm
+                    })
+                        .done(function () {
+                            toastr.success("Archive request successful. ");
+                            $("#staff").typeahead("val", "");    
+                            $("#archive").typeahead("val", "");
+                            $("#archives").empty();
+
+                            vm = { archiveIds: [] };    
+
+                            validator.resetForm(); 
+                        })
+                        .fail(function () {
+                            toastr.error("Something unexpected happened. ");
+                        });
+
+                    return false;
+                }
+            });
+
+           
+        });
+    </script>
+
+
+}

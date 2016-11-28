@@ -237,13 +237,18 @@ namespace WebApplication
                 "~/Scripts/bootbox.js",
                 "~/Scripts/datatables/jquery.datatables.js",
                 "~/Scripts/datatables/datatables.bootstrap.js",
-                 "~/Scripts/datatables/datetime.js"));
+                 "~/Scripts/datatables/datetime.js",
+                 "~/Scripts/toastr.js",
+                 "~/Scripts/typeahead.bundle.js"));
 
            
 
             bundles.Add(new StyleBundle("~/AdminLTE/bootstrap/css").Include(
                 "~/AdminLTE/bootstrap/css/bootstrap.min.css", 
-                "~/Content/datatables/css/datatables.bootstrap.css"));
+                "~/Content/datatables/css/datatables.bootstrap.css",
+                "~/Content/toastr.css",
+                "~/Content/Site.css",
+                "~/Content/typeahead.css"));
             
             // dist
             bundles.Add(new ScriptBundle("~/AdminLTE/dist/js").Include(
@@ -303,6 +308,9 @@ namespace WebApplication
             bundles.Add(new ScriptBundle("~/AdminLTE/plugins/datepicker/js").Include(
                                          "~/AdminLTE/plugins/datepicker/js/bootstrap-datepicker.js",
                                          "~/AdminLTE/plugins/datepicker/js/locales/bootstrap-datepicker*"));
+
+            bundles.Add(new  ScriptBundle("~/bundles/jqueryval").Include(
+                                "~/Scripts/jquery.validate*"));
 
             bundles.Add(new StyleBundle("~/AdminLTE/plugins/datepicker/css").Include(
                                         "~/AdminLTE/plugins/datepicker/css/datepicker3.css"));

@@ -209,13 +209,16 @@
     <Compile Include="App_Start\WebApiConfig.cs" />
     <Compile Include="Controllers\AccountController.cs" />
     <Compile Include="Controllers\Api\ArchivesController.cs" />
+    <Compile Include="Controllers\Api\NewArchiveRequestController.cs" />
     <Compile Include="Controllers\Api\StaffsController.cs" />
+    <Compile Include="Controllers\ArchiveRequestsController.cs" />
     <Compile Include="Controllers\ArchivesController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\StaffsController.cs" />
     <Compile Include="Dtos\ArchiveDto.cs" />
     <Compile Include="Dtos\CategoryDto.cs" />
     <Compile Include="Dtos\DepartmentDto.cs" />
+    <Compile Include="Dtos\NewArchiveRequestDto.cs" />
     <Compile Include="Dtos\StaffDto.cs" />
     <Compile Include="Extensions\ClaimsExtensions.cs" />
     <Compile Include="GlimpseSecurityPolicy.cs" />
@@ -250,10 +253,15 @@
     <Compile Include="Migrations\201611271008049_SeedStaffDepartments.Designer.cs">
       <DependentUpon>201611271008049_SeedStaffDepartments.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201611280133291_CreatedArchiveRequest.cs" />
+    <Compile Include="Migrations\201611280133291_CreatedArchiveRequest.Designer.cs">
+      <DependentUpon>201611280133291_CreatedArchiveRequest.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
     <Compile Include="Models\ApplicationDbContext.cs" />
     <Compile Include="Models\Archive.cs" />
+    <Compile Include="Models\ArchiveRequest.cs" />
     <Compile Include="Models\Category.cs" />
     <Compile Include="Models\Department.cs" />
     <Compile Include="Models\IdentityModels.cs" />
@@ -565,10 +573,16 @@
     <Content Include="Content\DataTables\images\sort_desc.png" />
     <Content Include="Content\DataTables\images\sort_desc_disabled.png" />
     <Content Include="Content\DataTables\swf\flashExport.swf" />
+    <Content Include="Content\Site.css" />
+    <Content Include="Content\toastr.css" />
+    <Content Include="Content\toastr.min.css" />
+    <Content Include="Content\typeahead.css" />
     <Content Include="favicon.ico" />
     <Content Include="Global.asax" />
     <Content Include="Scripts\Account\Login.js" />
     <Content Include="Scripts\Account\Register.js" />
+    <Content Include="Scripts\bloodhound.js" />
+    <Content Include="Scripts\bloodhound.min.js" />
     <Content Include="Scripts\bootbox.js" />
     <Content Include="Scripts\bootbox.min.js" />
     <Content Include="Scripts\DataTables\autoFill.bootstrap.js" />
@@ -639,7 +653,16 @@
     <Content Include="Scripts\Home\DashboardV1.js" />
     <Content Include="Scripts\Home\DashboardV2-menu.js" />
     <Content Include="Scripts\Home\DashboardV2.js" />
+    <None Include="Scripts\jquery.validate-vsdoc.js" />
+    <Content Include="Scripts\jquery.validate.js" />
+    <Content Include="Scripts\jquery.validate.min.js" />
     <Content Include="Scripts\Shared\_Layout.js" />
+    <Content Include="Scripts\toastr.js" />
+    <Content Include="Scripts\toastr.min.js" />
+    <Content Include="Scripts\typeahead.bundle.js" />
+    <Content Include="Scripts\typeahead.bundle.min.js" />
+    <Content Include="Scripts\typeahead.jquery.js" />
+    <Content Include="Scripts\typeahead.jquery.min.js" />
     <Content Include="Styles\Elements\General.css" />
     <Content Include="Styles\Elements\Icons.css" />
     <Content Include="Styles\Elements\Modals.css" />
@@ -685,6 +708,7 @@
     <Content Include="Views\Staffs\StaffForm.cshtml" />
     <Content Include="Views\Staffs\Index.cshtml" />
     <Content Include="Views\Staffs\Details.cshtml" />
+    <Content Include="Views\ArchiveRequests\New.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
@@ -713,6 +737,8 @@
     <Content Include="bower_components\angular\bower.json" />
     <Content Include="bower_components\angular\package.json" />
     <Content Include="bower_components\angular\README.md" />
+    <Content Include="Content\toastr.scss" />
+    <Content Include="Content\toastr.less" />
     <None Include="Project_Readme.html" />
   </ItemGroup>
   <ItemGroup>
@@ -739,6 +765,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201611271008049_SeedStaffDepartments.resx">
       <DependentUpon>201611271008049_SeedStaffDepartments.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201611280133291_CreatedArchiveRequest.resx">
+      <DependentUpon>201611280133291_CreatedArchiveRequest.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>

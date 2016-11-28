@@ -21,10 +21,16 @@ namespace WebApplication.Controllers.Api
 
         // GET /api/archives
 
-        public IEnumerable<ArchiveDto> GetArchives()
+        public IEnumerable<ArchiveDto> GetArchives(string query = null)
         {
-            return _context.Archives
-                .Include(a => a.Category)
+            var archivesQuery = _context.Archives
+                .Include(a => a.Category);
+
+            if (!String.IsNullOrWhiteSpace(query))
+                archivesQuery = archivesQuery.Where(a => a.Name.Contains(query));
+
+
+                return archivesQuery
                 .ToList()
                 .Select(Mapper.Map<Archive, ArchiveDto>);
         }
